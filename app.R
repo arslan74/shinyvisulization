@@ -9,7 +9,8 @@
 #source("R/fetch_data.R",encoding = getOption("encoding"))
 # loading libaries
 library(devtools)
-install_github("zahrajalilpour292/ApiPkgLab")
+#unload("ApiPkgLab5")
+install_github("zahrajalilpour292/ApiPkgLab",force = TRUE)
 library(ApiPkgLab5)
 library(shiny)
 library(leaflet.minicharts)
@@ -62,7 +63,7 @@ server <- function(input, output, session) {
         
         
         datasetInput <- eventReactive({
-            get_city_crimes_loc(as.character(input$selectcity))
+            get_city_crimes_loc(as.character(input$selectcity),df_comp_crime)
         })
         
         leaflet() %>%
