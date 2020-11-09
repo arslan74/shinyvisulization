@@ -7,6 +7,15 @@
 #setwd('../..')
 #print(getwd())
 #source("R/fetch_data.R",encoding = getOption("encoding"))
+
+listOfPackages <- c("devtools","shiny","leaflet.minicharts","leaflet","leaflet.extras","stringr")
+for (i in listOfPackages){
+    if(!i %in% installed.packages()){
+        install.packages(i, dependencies = TRUE)
+    }
+}
+
+
 # loading libaries
 library(devtools)
 #unload("ApiPkgLab5")
@@ -16,7 +25,7 @@ library(shiny)
 require(leaflet.minicharts)
 require(leaflet)
 require(leaflet.extras)
-library(stringr)
+require(stringr)
 
 df_crime <- get_crime_dataframe(200)
 
@@ -68,7 +77,7 @@ server <- function(input, output, session) {
             lati <- ApiPkgLab5::get_city_crimes_loc(input_name,df_comp_crime)[,1]
             long <- ApiPkgLab5::get_city_crimes_loc(input_name,df_comp_crime)[,2]
             
-            leafletProxy("map",data = matrix(long,lati)) %>%
+            leafletProxy("map") %>%
                 clearMarkers()%>%
                 addPulseMarkers(lng = long,
                                 lat = lati,
